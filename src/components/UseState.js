@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useReducer, useState } from "react"
+import { reducer } from "./UseReducer";
 
 const SECURITY_CODE = 'paradigma';
 
 
 function UseState(props){
 
-    const [state, setState] = useState({
+    const initialValue ={
         value: '',
         error: false,
         loading: false,
         deleted: false,
         confirmed: false
-    })
+    }
+
+
+    const [state, dispatch] = useReducer(reducer, initialValue)
 
 
     useEffect(()=>{
@@ -20,22 +24,10 @@ function UseState(props){
                 console.log("Ejecutando el efecto...");
                 console.log(state.value);
                 if(state.value === SECURITY_CODE){
-                    setState({
-                        ...state,
-                        loading: false,
-                        error: false,
-                        confirmed: true
-                    })
-                    // setError(true);
+                    dispatch({type:'Confirm'})
                 }else{
-                    setState({
-                        ...state,
-                        loading: false,
-                        error: true,
-                    })
+                    dispatch({type:'Error'})
                 }
-                // setLoading(false);
-                
             }, 3000)
         }
     }, 
@@ -63,18 +55,11 @@ function UseState(props){
                     placeholder="Digita el codigo de segurida" 
                     value={state.value} 
                     onChange={(event)=>{ 
-                        setState({
-                            ...state,
-                            value: event.target.value
-                        })
+                        dispatch({type:'Write', payload: event.target.value })
                     }}
                     />
                 <button onClick={()=>{
-                    setState({
-                        ...state,
-                        loading: true
-                    })
-
+                    dispatch({type:'Check'})
                 }}>Comprobar</button>
             </div>
         )
@@ -84,17 +69,10 @@ function UseState(props){
                 <p>Confirmar acción</p>
                 <p><strong>Esta seguro que quiere eliminar es State</strong></p>
                 <button onClick={()=>{
-                    setState({
-                        ...state,
-                        deleted: true
-                    })
+                    dispatch({type:'Deleted'})
                 }}>Si, eliminar</button>
                 <button onClick={()=>{
-                    setState({
-                        ...state,
-                        confirmed: false,
-                        value: ''
-                    })
+                    dispatch({type:'Reset'})
                 }}>Cancelar acción</button>
             </>
         )
@@ -103,12 +81,7 @@ function UseState(props){
         <>
             <p>El Status <strong>{state.value}</strong> se elimino con exito!</p>
             <button onClick={()=>{
-                    setState({
-                        ...state,
-                        confirmed: false,
-                        deleted: false,
-                        value: ''
-                    })
+                    dispatch({type:'Reset'})
                 }}>Resetear Acción</button>
         </>
        )

@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="App">
-      <UseState name="Usestate"/>
+      <UseState name="Usestate - UseReducer"/>
       <ClasState name="ClasState"/>
     </div>
   );

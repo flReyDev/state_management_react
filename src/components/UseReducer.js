@@ -1,55 +1,6 @@
-const initialValue ={
-    value: '',
-    error: false,
-    loading: false,
-    deleted: false,
-    confirmed: false
-}
 
 
-const reducerIf = (state, actions) => {
-    if(actions.typec === 'Error'){
-        return {
-            ...state,
-            error: true,
-            loading: false,
-        }
-    }else if(actions.typec === 'Check'){
-        return {
-            ...state,
-            loading: true,
-        }
-    }else{
-        return {
-            ...initialValue
-        }
-    }
-}
-
-
-const reducerSwitch = (state, actions) => {
-    
-    switch(actions.type){
-        case 'Error':
-            return {
-                ...state,
-                error: true,
-                loading: false,
-            }
-        case 'Check':
-            return {
-                ...state,
-                loading: true
-            }
-        default:
-            return{
-                ...state
-            }
-
-    }
-}
-
-const reducerObject = (state) => ({
+const reducerObject = (state, payload) => ({
     'Error': {
         ...state,
         error: true,
@@ -58,13 +9,36 @@ const reducerObject = (state) => ({
     'Check': {
         ...state,
         loading: true
+    },
+    'Confirm':{
+        ...state,
+        error:false,
+        loading: false,
+        confirmed: true
+    },
+    'Write':{
+        ...state,
+        value: payload
+    },
+    'Deleted':{
+        ...state,
+        deleted: true
+    },
+    'Reset': {
+        ...state,
+        confirmed: false,
+        deleted: false,
+        value: ''
     }
 });
 
 const reducer = (state, actions) => {
     if(reducerObject(state)[actions.type]){
-        return reducerObject(state)[actions.type];
+        return reducerObject(state, actions.payload)[actions.type];
     }else{
         return state;
     }
 }
+
+
+export{reducer}
