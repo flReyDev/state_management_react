@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react"
-import { reducer } from "./UseReducer";
+import { reducer, actionTypes } from "./UseReducer";
 
 const SECURITY_CODE = 'paradigma';
 
@@ -24,9 +24,9 @@ function UseState(props){
                 console.log("Ejecutando el efecto...");
                 console.log(state.value);
                 if(state.value === SECURITY_CODE){
-                    dispatch({type:'Confirm'})
+                    dispatch({type: actionTypes.Confirm})
                 }else{
-                    dispatch({type:'Error'})
+                    dispatch({type: actionTypes.Error})
                 }
             }, 3000)
         }
@@ -55,11 +55,11 @@ function UseState(props){
                     placeholder="Digita el codigo de segurida" 
                     value={state.value} 
                     onChange={(event)=>{ 
-                        dispatch({type:'Write', payload: event.target.value })
+                        dispatch({type: actionTypes.Write, payload: event.target.value })
                     }}
                     />
                 <button onClick={()=>{
-                    dispatch({type:'Check'})
+                    dispatch({type: actionTypes.Check})
                 }}>Comprobar</button>
             </div>
         )
@@ -69,10 +69,10 @@ function UseState(props){
                 <p>Confirmar acción</p>
                 <p><strong>Esta seguro que quiere eliminar es State</strong></p>
                 <button onClick={()=>{
-                    dispatch({type:'Deleted'})
+                    dispatch({type: actionTypes.Deleted})
                 }}>Si, eliminar</button>
                 <button onClick={()=>{
-                    dispatch({type:'Reset'})
+                    dispatch({type: actionTypes.Reset})
                 }}>Cancelar acción</button>
             </>
         )
@@ -81,7 +81,7 @@ function UseState(props){
         <>
             <p>El Status <strong>{state.value}</strong> se elimino con exito!</p>
             <button onClick={()=>{
-                    dispatch({type:'Reset'})
+                    dispatch({type: actionTypes.Reset})
                 }}>Resetear Acción</button>
         </>
        )

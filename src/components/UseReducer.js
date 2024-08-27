@@ -1,30 +1,30 @@
 
 
 const reducerObject = (state, payload) => ({
-    'Error': {
+    [actionTypes.Error]: {
         ...state,
         error: true,
         loading: false,
     },
-    'Check': {
+    [actionTypes.Check]: {
         ...state,
         loading: true
     },
-    'Confirm':{
+    [actionTypes.Confirm]:{
         ...state,
         error:false,
         loading: false,
         confirmed: true
     },
-    'Write':{
+    [actionTypes.Write]:{
         ...state,
         value: payload
     },
-    'Deleted':{
+    [actionTypes.Deleted]:{
         ...state,
         deleted: true
     },
-    'Reset': {
+    [actionTypes.Reset]: {
         ...state,
         confirmed: false,
         deleted: false,
@@ -40,5 +40,14 @@ const reducer = (state, actions) => {
     }
 }
 
+const actionTypes = {
+    Error: 'Error',
+    Check: 'Check',
+    Confirm: 'Confirm',
+    Write: 'Write',
+    Deleted: 'Deleted',
+    Reset: 'Reset'
+}
 
-export{reducer}
+
+export{reducer, actionTypes}
