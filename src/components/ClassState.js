@@ -28,6 +28,7 @@ class ClasState extends React.Component{
             }, 3000)
         }
     }
+    
 
 
     render(){

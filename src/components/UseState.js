@@ -14,7 +14,6 @@ function UseState(props){
         confirmed: false
     }
 
-
     const [state, dispatch] = useReducer(reducer, initialValue)
 
 
